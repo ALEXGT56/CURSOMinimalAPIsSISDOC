@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/01. deploy/">
+    <File Path="docker-compose.yml" />
+  </Folder>
+  <Folder Name="/02. src/" />
+  <Folder Name="/02. src/01. Presentation/">
+    <Project Path="SisDoc/SisDoc.API.csproj" />
+  </Folder>
+  <Folder Name="/02. src/02. Core/">
+    <Project Path="SisDoc.Business/SisDoc.Business.csproj" />
+  </Folder>
+  <Folder Name="/02. src/03. Repositories/">
+    <Project Path="SisDoc.Repositories/SisDoc.Repositories.csproj" />
+  </Folder>
+  <Folder Name="/02. src/04. Infraestructure/">
+    <Project Path="SisDoc.DataAccess/SisDoc.DataAccess.csproj" />
+  </Folder>
+  <Folder Name="/02. src/05. Common/" />
+</Solution>
