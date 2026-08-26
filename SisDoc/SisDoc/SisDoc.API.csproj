@@ -5,11 +5,17 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <PublishAot>true</PublishAot>
+    <PublishAot>False</PublishAot>
+   <UserSecretsId>5e824f04-f79a-4670-8f11-027a1cdf5efa</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Endpoints\" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.11" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.22.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SisDoc.Business\SisDoc.Business.csproj" />
   </ItemGroup>
 
 </Project>

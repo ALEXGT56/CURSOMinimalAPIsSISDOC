@@ -1,7 +1,7 @@
  services:
-  sqlserver_minimalapiSisDoc:
+  sqlserver_minimalapi:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver_minimalapiSisDoc
+    container_name: sqlserver_minimalapi
     restart: always
     environment:
       MSSQL_SA_PASSWORD: "Password2026"
@@ -10,4 +10,4 @@
     ports:
       - 1501:1433
     volumes:
-      - C:\Users\USUARIO\Documents\Docker\Volumenes\minimal_api:/var/opt/mssql/data
+      - C:\Users\PC\Documents\Docker\Volumenes\minimal_api:/var/opt/mssql/data

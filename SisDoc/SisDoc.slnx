@@ -15,5 +15,7 @@
   <Folder Name="/02. src/04. Infraestructure/">
     <Project Path="SisDoc.DataAccess/SisDoc.DataAccess.csproj" />
   </Folder>
-  <Folder Name="/02. src/05. Common/" />
+  <Folder Name="/02. src/05. Common/">
+    <Project Path="SisDoc.Common/SisDoc.Common.csproj" Id="feae6100-8629-47b7-8a3f-b178203af252" />
+  </Folder>
 </Solution>
