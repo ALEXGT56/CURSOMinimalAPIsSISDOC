@@ -1,6 +1,6 @@
 @SisDoc.API_HostAddress = http://localhost:5279
 
-GET {{SisDoc.API_HostAddress}}/todos/
+GET {{SisDoc.API_HostAddress}}/swagger/
 Accept: application/json
 
 ###

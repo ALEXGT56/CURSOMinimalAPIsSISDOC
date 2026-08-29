@@ -38,6 +38,13 @@ builder.Services
     .AddBusiness()
     .AddRepositories();
 
+// Configurar Swagger / OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "Minimal API SisDoc ", Version = "v1" });
+});
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -46,6 +53,15 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minimal API SisDoc v1");
+    });
+}
 
 app.MapGroup("/api/auth").MapAuthEndpoints().WithTags("Auth");
 app.MapGroup("/api/persons").MapCustomerEndpoints().WithTags("Persons");
