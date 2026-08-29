@@ -49,7 +49,6 @@ app.UseAuthorization();
 
 app.MapGroup("/api/auth").MapAuthEndpoints().WithTags("Auth");
 app.MapGroup("/api/persons").MapCustomerEndpoints().WithTags("Persons");
-
-
+app.MapGroup("/api/documenttickets").MapDocumentTicketEndpoints().WithTags("DocumentTickets");
 
 app.Run();

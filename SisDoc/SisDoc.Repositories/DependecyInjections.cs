@@ -14,6 +14,7 @@ namespace SisDoc.Repositories
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IDocumentTicketRepository, DocumentTicketRepository>();
 
             return services;
         }
