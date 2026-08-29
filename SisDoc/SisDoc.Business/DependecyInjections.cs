@@ -11,6 +11,7 @@ namespace SisDoc.Business
         {
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IPersonService, PersonService>();
             return services;
         }
     }

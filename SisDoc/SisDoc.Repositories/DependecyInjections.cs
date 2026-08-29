@@ -13,6 +13,8 @@ namespace SisDoc.Repositories
         {
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
+
             return services;
         }
     }
