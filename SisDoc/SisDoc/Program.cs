@@ -66,5 +66,6 @@ if (app.Environment.IsDevelopment())
 app.MapGroup("/api/auth").MapAuthEndpoints().WithTags("Auth");
 app.MapGroup("/api/persons").MapCustomerEndpoints().WithTags("Persons");
 app.MapGroup("/api/documenttickets").MapDocumentTicketEndpoints().WithTags("DocumentTickets");
+app.MapGroup("/api/globalstatus").MapGlobalStatusEndpoints().WithTags("GlobalStatus");
 
 app.Run();

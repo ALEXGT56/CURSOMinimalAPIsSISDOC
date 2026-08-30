@@ -13,6 +13,7 @@ namespace SisDoc.Business
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IDocumentTicketService, DocumentTicketService>();
+            services.AddScoped<IGlobalStatusService, GlobalStatusService>();
             return services;
         }
     }
