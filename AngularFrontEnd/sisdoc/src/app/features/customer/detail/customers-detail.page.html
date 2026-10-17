@@ -1,0 +1,47 @@
+<app-page-header [title]="customer()?.name ?? 'Datos del cliente'" description="Información completa del cliente">
+  <a mat-button routerLink="/products"><mat-icon>arrow_back</mat-icon> Volver</a>
+  <a *appHasRole="'Admin'" mat-raised-button color="primary" [routerLink]="['/products', customer()?.id, 'edit']">
+    <mat-icon>edit</mat-icon> Editar
+  </a>
+</app-page-header>
+
+@if (loading()) {
+<mat-progress-bar mode="indeterminate" />
+} @else if (customer()) {
+<mat-card>
+  <mat-card-content>
+
+    <div class="detail-grid">
+      <div class="detail-field">
+        <span class="detail-field__label">Nombre</span>
+        <span class="detail-field__value">{{ customer()!.name }}</span>
+      </div>
+      <div class="detail-field">
+        <span class="detail-field__label">Apellidos</span>
+        <span class="detail-field__value">{{ customer()!.lastName }}</span>
+      </div>
+      <div class="detail-field">
+        <span class="detail-field__label">Correo electronico</span>
+        <span class="detail-field__value">{{ customer()!.email }}</span>
+      </div>
+      <div class="detail-field">
+        <span class="detail-field__label">Telefono</span>
+        <span class="detail-field__value">{{ customer()!.phone }}</span>
+      </div>
+
+      @if (customer()!.createdAt) {
+      <div class="detail-field">
+        <span class="detail-field__label">Creado</span>
+        <span class="detail-field__value">{{ customer()!.createdAt | date:'medium' }}</span>
+      </div>
+      }
+      @if (customer()!.createdBy) {
+      <div class="detail-field">
+        <span class="detail-field__label">Creado por</span>
+        <span class="detail-field__value">{{ customer()!.createdBy }}</span>
+      </div>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>
+}

@@ -1,0 +1,56 @@
+<app-page-header [title]="product()?.name ?? 'Detalle de Producto'" description="Información completa del producto">
+  <a mat-button routerLink="/products"><mat-icon>arrow_back</mat-icon> Volver</a>
+  <a *appHasRole="'Admin'" mat-raised-button color="primary"
+     [routerLink]="['/products', product()?.id, 'edit']">
+    <mat-icon>edit</mat-icon> Editar
+  </a>
+</app-page-header>
+
+@if (loading()) {
+  <mat-progress-bar mode="indeterminate" />
+} @else if (product()) {
+  <mat-card>
+    <mat-card-content>
+
+      <div class="detail-grid">
+        <div class="detail-field">
+          <span class="detail-field__label">Nombre</span>
+          <span class="detail-field__value">{{ product()!.name }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-field__label">Categoría</span>
+          <span class="detail-field__value">{{ product()!.category }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-field__label">Precio</span>
+          <span class="detail-field__value">{{ product()!.price | currency:'USD' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-field__label">Stock</span>
+          <span class="detail-field__value">
+            {{ product()!.stock }}
+            @if (product()!.stock < 5) {
+              <mat-chip class="chip-stock-low">Stock bajo</mat-chip>
+            }
+          </span>
+        </div>
+        <div class="detail-field full-width">
+          <span class="detail-field__label">Descripción</span>
+          <span class="detail-field__value">{{ product()!.description }}</span>
+        </div>
+        @if (product()!.createdAt) {
+          <div class="detail-field">
+            <span class="detail-field__label">Creado</span>
+            <span class="detail-field__value">{{ product()!.createdAt | date:'medium' }}</span>
+          </div>
+        }
+        @if (product()!.createdBy) {
+          <div class="detail-field">
+            <span class="detail-field__label">Creado por</span>
+            <span class="detail-field__value">{{ product()!.createdBy }}</span>
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+}
