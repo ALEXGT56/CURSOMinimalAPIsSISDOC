@@ -1,0 +1,39 @@
+<app-page-header [title]="globalstatus()?.name ?? 'Detalle de Estado'" description="Información completa del estado">
+  <a mat-button routerLink="/globalstatus"><mat-icon>arrow_back</mat-icon> Volver</a>
+  <a *appHasRole="'Admin'" mat-raised-button color="primary"
+     [routerLink]="['/globalstatus', globalstatus()?.id, 'edit']">
+    <mat-icon>edit</mat-icon> Editar
+  </a>
+</app-page-header>
+
+@if (loading()) {
+  <mat-progress-bar mode="indeterminate" />
+} @else if (globalstatus()) {
+  <mat-card>
+    <mat-card-content>
+
+      <div class="detail-grid">
+        <div class="detail-field">
+          <span class="detail-field__label">Nombre</span>
+          <span class="detail-field__value">{{ globalstatus()!.name }}</span>
+        </div>        
+        <div class="detail-field full-width">
+          <span class="detail-field__label">Descripción</span>
+          <span class="detail-field__value">{{ globalstatus()!.description }}</span>
+        </div>
+        @if (globalstatus()!.createdAt) {
+          <div class="detail-field">
+            <span class="detail-field__label">Creado</span>
+            <span class="detail-field__value">{{ globalstatus()!.createdAt | date:'medium' }}</span>
+          </div>
+        }
+        @if (globalstatus()!.createdBy) {
+          <div class="detail-field">
+            <span class="detail-field__label">Creado por</span>
+            <span class="detail-field__value">{{ globalstatus()!.createdBy }}</span>
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+}

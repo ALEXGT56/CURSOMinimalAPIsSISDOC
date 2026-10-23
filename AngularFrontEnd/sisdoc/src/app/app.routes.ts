@@ -32,9 +32,9 @@ export const routes: Routes = [
                     import('./features/dashboard/dashboard.page').then((m) => m.DashboardPage)
             },
             {
-                path: 'products',
+                path: 'globalstatus',
                 loadChildren: () =>
-                    import('./features/products/products.routes').then((m) => m.PRODUCTS_ROUTES)
+                    import('./features/globalstatus/globalstate.routes').then((m) => m.GLOBALSTATUS_ROUTES)
             },
             {
                 path: 'customers',

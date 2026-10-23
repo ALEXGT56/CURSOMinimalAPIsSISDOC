@@ -6,6 +6,10 @@ export const API_ROUTES = {
         BASE: '/api/globalstatus',
         BY_ID: (id: string) => `/api/globalstatus/${id}`,
     },
+    GLOBALSTATUS: {
+        BASE: '/api/globalstatus',
+        BY_ID: (id: string) => `/api/globalstatus/${id}`,
+    },
     CUSTOMERS: {
         BASE: '/api/customers',
         BY_ID: (id: string) => `/api/customers/${id}`,

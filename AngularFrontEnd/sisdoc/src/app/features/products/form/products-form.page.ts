@@ -42,9 +42,6 @@ export class ProductsFormPage implements OnInit {
   form = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(100)]],
     description: ['', [Validators.required, Validators.maxLength(100)]],
-    categoryId: [null as number | null, [Validators.required]],
-    price: [null as number | null, [Validators.required, Validators.min(0.01)]],
-    stock: [null as number | null, [Validators.required, Validators.min(0)]]
   });
 
   get title(): string {
@@ -90,9 +87,6 @@ export class ProductsFormPage implements OnInit {
     const request = {
       name: value.name!,
       description: value.description!,
-      categoryId: Number(value.categoryId),
-      price: Number(value.price),
-      stock: Number(value.stock),
     };
 
     this.loading.set(true);
