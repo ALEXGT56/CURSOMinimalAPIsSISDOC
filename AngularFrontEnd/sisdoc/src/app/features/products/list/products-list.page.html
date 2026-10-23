@@ -1,4 +1,4 @@
-<app-page-header title="Estados" description="Catálogo de productos disponibles">
+<app-page-header title="Estados" description="Catálogo de estados disponibles">
   <button mat-raised-button color="primary" routerLink="/products/new">
     <mat-icon>add</mat-icon> Nuevo estado
   </button>
@@ -8,7 +8,7 @@
   <mat-card-content>
 
     <mat-form-field appearance="outline" class="search-field">
-      <mat-label>Buscar producto</mat-label>
+      <mat-label>Buscar estado</mat-label>
       <mat-icon matPrefix>search</mat-icon>
       <input 
         matInput
@@ -76,7 +76,7 @@
     </div>
 
     <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5, 10, 25]"
-      (page)="onPageChange($event)" aria-label="Paginación de productos" />
+      (page)="onPageChange($event)" aria-label="Paginación de estados" />
     }
   </mat-card-content>
 </mat-card>

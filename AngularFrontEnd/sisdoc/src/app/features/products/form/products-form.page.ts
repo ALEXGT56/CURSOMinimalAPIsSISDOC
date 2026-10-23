@@ -48,16 +48,14 @@ export class ProductsFormPage implements OnInit {
   });
 
   get title(): string {
-    return this.isEditMode ? 'Editar producto' : 'Nuevo producto';
+    return this.isEditMode ? 'Editar estado' : 'Nuevo estado';
   }
 
   get description(): string {
-    return this.isEditMode ? 'Modifica los datos del producto' : 'Completa los datos del nuevo producto';
+    return this.isEditMode ? 'Modifica los datos del estado' : 'Completa los datos del nuevo estado';
   }
 
   ngOnInit(): void {
-
-    this.loadCategories();
 
     const id = this.route.snapshot.paramMap.get('id');
 
@@ -68,13 +66,6 @@ export class ProductsFormPage implements OnInit {
     }
   }
 
-  private loadCategories(): void {
-    this.categoryService.list({ pageNumber: 1, pageSize: 20 }).subscribe({
-      next: (cats) => this.categories.set(cats),
-      error: () => this.notification.error("No se pudieron cargar las categorias"),
-    });
-  }
-
   private loadProduct(id: number): void {
     this.loadingData.set(true);
     this.productService.getById(id).subscribe({
@@ -82,14 +73,11 @@ export class ProductsFormPage implements OnInit {
         this.form.patchValue({
           name: product.name,
           description: product.description,
-          categoryId: product.categoryId ?? null,
-          price: product.price,
-          stock: product.stock
         });
         this.loadingData.set(false);
       },
       error: () => {
-        this.notification.error("Error al cargar el producto");
+        this.notification.error("Error al cargar el estado");
         this.loadingData.set(false);
       }
     });
@@ -116,12 +104,12 @@ export class ProductsFormPage implements OnInit {
     operation$.subscribe({
       next: () => {
         this.loading.set(false);
-        this.notification.success(this.isEditMode ? 'Producto actualizado correctamente' : 'Producto creado correctamente');
+        this.notification.success(this.isEditMode ? 'Estado actualizado correctamente' : 'Estado creado correctamente');
         this.router.navigate(['/products']);
       },
       error: (err: HttpErrorResponse) => {
         this.loading.set(false);
-        const msg = err.error?.message ?? 'Error al guardar el producto';
+        const msg = err.error?.message ?? 'Error al guardar el estado';
         this.notification.error(msg);
       }
     })

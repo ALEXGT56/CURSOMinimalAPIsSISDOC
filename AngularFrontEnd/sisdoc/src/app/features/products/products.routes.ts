@@ -9,13 +9,13 @@ export const PRODUCTS_ROUTES: Routes = [
     {
         path: 'new',
         loadComponent: () => import('./form/products-form.page').then(m => m.ProductsFormPage),
-        canActivate: [roleGuard('Admin')],
+        //canActivate: [roleGuard('Admin')],
             
     },
     {
         path: ':id/edit',
         loadComponent: () => import('./form/products-form.page').then(m => m.ProductsFormPage),
-        canActivate: [roleGuard('Admin')]
+        //canActivate: [roleGuard('Admin')]
     },
     {
         path: ':id',

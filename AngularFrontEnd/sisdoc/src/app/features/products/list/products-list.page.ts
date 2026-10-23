@@ -71,7 +71,7 @@ export class ProductsListPage implements OnInit {
           this.loading.set(false);
         },
         error: () => {
-          this.notification.error('Error loading products');
+          this.notification.error('Error loading globalstates');
           this.loading.set(false);
         }
       });
@@ -90,7 +90,7 @@ export class ProductsListPage implements OnInit {
   confirmDelete(product: Product): void {
     const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Eliminar producto',
+        title: 'Eliminar estado',
         message: `¿Estás seguro de eliminar "${product.name}"?. Esta acción no se deshacer.`,
         confirmLabel: 'Eliminar'
       }
@@ -106,11 +106,11 @@ export class ProductsListPage implements OnInit {
   private deleteProduct(id: number): void {
     this.productService.delete(id).subscribe({
       next: () => {
-        this.notification.success("Producto eliminado correctamente");
+        this.notification.success("Estado eliminado correctamente");
         this.loadProducts();
       },
       error: () => {
-        this.notification.error("Error al eliminar el producto");
+        this.notification.error("Error al eliminar el estado");
       }
     });
   }

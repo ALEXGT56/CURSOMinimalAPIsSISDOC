@@ -1,4 +1,4 @@
-<app-page-header [title]="product()?.name ?? 'Detalle de Producto'" description="Información completa del producto">
+<app-page-header [title]="product()?.name ?? 'Detalle de Estado'" description="Información completa del estado">
   <a mat-button routerLink="/products"><mat-icon>arrow_back</mat-icon> Volver</a>
   <a *appHasRole="'Admin'" mat-raised-button color="primary"
      [routerLink]="['/products', product()?.id, 'edit']">
@@ -16,24 +16,7 @@
         <div class="detail-field">
           <span class="detail-field__label">Nombre</span>
           <span class="detail-field__value">{{ product()!.name }}</span>
-        </div>
-        <div class="detail-field">
-          <span class="detail-field__label">Categoría</span>
-          <span class="detail-field__value">{{ product()!.category }}</span>
-        </div>
-        <div class="detail-field">
-          <span class="detail-field__label">Precio</span>
-          <span class="detail-field__value">{{ product()!.price | currency:'USD' }}</span>
-        </div>
-        <div class="detail-field">
-          <span class="detail-field__label">Stock</span>
-          <span class="detail-field__value">
-            {{ product()!.stock }}
-            @if (product()!.stock < 5) {
-              <mat-chip class="chip-stock-low">Stock bajo</mat-chip>
-            }
-          </span>
-        </div>
+        </div>        
         <div class="detail-field full-width">
           <span class="detail-field__label">Descripción</span>
           <span class="detail-field__value">{{ product()!.description }}</span>
