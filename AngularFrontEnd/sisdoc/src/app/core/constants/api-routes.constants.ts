@@ -3,8 +3,8 @@ export const API_ROUTES = {
         LOGIN: '/api/auth/login',
     },
     PRODUCTS: {
-        BASE: '/api/products',
-        BY_ID: (id: string) => `/api/products/${id}`,
+        BASE: '/api/globalstatus',
+        BY_ID: (id: string) => `/api/globalstatus/${id}`,
     },
     CUSTOMERS: {
         BASE: '/api/customers',

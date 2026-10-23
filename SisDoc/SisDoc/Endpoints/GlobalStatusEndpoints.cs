@@ -9,6 +9,16 @@ namespace SisDoc.API.Endpoints
     {
         public static RouteGroupBuilder MapGlobalStatusEndpoints(this RouteGroupBuilder group)
         {
+            group.MapGet("/", async (IGlobalStatusService service, int pageNumber = 1, int pageSize = 100) =>
+            {
+                var result = await service.ListAsync(pageNumber, pageSize);
+                return Results.Ok(result);
+            })
+            .WithName("ListGlobalStatus")
+            .WithSummary("Listado de GlobalStatus")
+            //.RequireAuthorization()
+            .Produces<List<ListGlobalStatusResponse>>(StatusCodes.Status200OK);
+
             group.MapPost("/", async (AddGlobalStatusRequest request, IGlobalStatusService globalStatusService) =>
             {
                 var result = await globalStatusService.CreateAsync(request);
@@ -29,7 +39,7 @@ namespace SisDoc.API.Endpoints
                 return Results.Ok(globalstatus);
             })
             .WithName("GetByIdGlobalStatus")
-            .WithSummary("Detalle de un producto")
+            .WithSummary("Detalle de un GlobalStatus")
             .RequireAuthorization()
             .Produces<GetGlobalStatusResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound);
@@ -46,20 +56,7 @@ namespace SisDoc.API.Endpoints
             .Produces<AddGlobalStatusRequest>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound);
-
-            group.MapGet("/", async (int pageNumber, int pageSize, IGlobalStatusService globalStatusService) =>
-            {
-                var globalstatus = await globalStatusService.ListAsync(pageNumber, pageSize);
-                if (globalstatus == null)
-                    return Results.NotFound();
-
-                return Results.Ok(globalstatus);
-            })
-               .WithName("Get list GlobalStatus")
-               .WithSummary("Listado de GlobalStatus")
-               //.RequireAuthorization()
-               .Produces<GetGlobalStatusResponse>(StatusCodes.Status200OK);
-
+            
             group.MapDelete("/{id:int}", async (int id, IGlobalStatusService globalStatusService) =>
             {
                 var result = await globalStatusService.DeleteAsync(id);

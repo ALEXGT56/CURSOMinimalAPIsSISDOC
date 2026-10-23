@@ -11,12 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngularApp",
+    options.AddPolicy("AllowAll",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200") // Puerto donde corre tu Angular[cite: 4, 5]
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
+            policy.AllowAnyOrigin()    // Permite cualquier origen (cualquier dominio o IP)
+                  .AllowAnyHeader()    // Permite cualquier cabecera
+                  .AllowAnyMethod();   // Permite cualquier método (GET, POST, PUT, DELETE, etc.)
         });
 });
 
@@ -59,8 +59,8 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-app.UseCors("AllowAngularApp");
+ 
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

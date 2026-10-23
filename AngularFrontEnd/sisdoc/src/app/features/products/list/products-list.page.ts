@@ -38,7 +38,7 @@ export class ProductsListPage implements OnInit {
   private readonly dialog = inject(MatDialog);
 
 
-  displayedColumns: string[] = ['name', 'description', 'category', 'price', 'stock', 'actions'];
+  displayedColumns: string[] = ['name', 'description', 'actions'];
   dataSource = new MatTableDataSource<Product>();
   loading = signal(false);
   totalItems = 0;
