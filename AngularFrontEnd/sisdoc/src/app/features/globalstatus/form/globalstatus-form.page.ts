@@ -58,11 +58,11 @@ export class GlobalStatusFormPage implements OnInit {
     if (id && id !== 'new') {
       this.isEditMode = true;
       this.globalstatusId = Number(id);
-      this.loadProduct(this.globalstatusId);
+      this.loadGlobalStatus(this.globalstatusId);
     }
   }
 
-  private loadProduct(id: number): void {
+  private loadGlobalStatus(id: number): void {
     this.loadingData.set(true);
     this.globalstatusService.getById(id).subscribe({
       next: (product) => {
@@ -98,7 +98,7 @@ export class GlobalStatusFormPage implements OnInit {
       next: () => {
         this.loading.set(false);
         this.notification.success(this.isEditMode ? 'Estado actualizado correctamente' : 'Estado creado correctamente');
-        this.router.navigate(['/products']);
+        this.router.navigate(['/globalstatus']);
       },
       error: (err: HttpErrorResponse) => {
         this.loading.set(false);
