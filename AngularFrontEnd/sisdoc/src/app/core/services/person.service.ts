@@ -4,21 +4,21 @@ import { ApiServiceFactory } from './api-service-factory';
 import { API_ROUTES } from '../constants/api-routes.constants';
 import { PagedRequest } from '../models/paged.model';
 import { map, Observable } from 'rxjs';
-import { CreateCustomerRequest, Customer, CustomerListItem, UpdateCustomerRequest } from '../models/customer.model';
+import { CreatePersonRequest, Person, PersonListItem, UpdatePersonRequest } from '../models/person.model';
 import { ApiResult } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CustomerService {
+export class PersonService {
   private readonly http = inject(HttpClient);
   private readonly factory = inject(ApiServiceFactory);
 
   private get baseUrl(): string {
-    return this.factory.create(API_ROUTES.CUSTOMERS.BASE).url;
+    return this.factory.create(API_ROUTES.PERSONS.BASE).url;
   }
 
-  list(request: PagedRequest): Observable<CustomerListItem[]> {
+  list(request: PagedRequest): Observable<PersonListItem[]> {
 
     const params = new HttpParams()
       .set('pageNumber', request.pageNumber.toString())
@@ -26,23 +26,23 @@ export class CustomerService {
       .set('search', request.search ?? '');
 
     return this.http
-      .get<ApiResult<CustomerListItem[]>>(this.baseUrl, { params })
+      .get<ApiResult<PersonListItem[]>>(this.baseUrl, { params })
       .pipe(
-        map((result) => result.value ?? [] as CustomerListItem[]))
+        map((result) => result.value ?? [] as PersonListItem[]))
   }
 
-  getById(id: number): Observable<Customer> {
+  getById(id: number): Observable<Person> {
     return this.http
-      .get<ApiResult<Customer>>(`${this.baseUrl}/${id}`)
+      .get<ApiResult<Person>>(`${this.baseUrl}/${id}`)
       .pipe(
         map((result) => result.value!))
   }
 
-  create(request: CreateCustomerRequest): Observable<ApiResult> {
+  create(request: CreatePersonRequest): Observable<ApiResult> {
     return this.http.post<ApiResult>(this.baseUrl, request);
   }
 
-  update(id: number, request: UpdateCustomerRequest): Observable<ApiResult> {
+  update(id: number, request: UpdatePersonRequest): Observable<ApiResult> {
     return this.http.put<ApiResult>(`${this.baseUrl}/${id}`, request);
   }
 

@@ -1,6 +1,6 @@
-<app-page-header title="Clientes" description="Catálogo de Clientes disponibles">
-  <button *appHasRole="'Admin'" mat-raised-button color="primary" routerLink="/customers/new">
-    <mat-icon>add</mat-icon> Nuevo Cliente
+<app-page-header title="Personas" description="Catálogo de Personas disponibles">
+  <button mat-raised-button color="primary" routerLink="/persons/new">
+    <mat-icon>add</mat-icon> Nuevo Persona
   </button>
 </app-page-header>
 
@@ -8,13 +8,13 @@
   <mat-card-content>
 
     <mat-form-field appearance="outline" class="search-field">
-      <mat-label>Buscar Cliente</mat-label>
+      <mat-label>Buscar Persona</mat-label>
       <mat-icon matPrefix>search</mat-icon>
       <input 
         matInput
         [formControl]="searchControl"
         placeholder="Nombre, categoria o descripción..."
-        aria-label="Buscar Cliente"
+        aria-label="Buscar Persona"
         aria-live="polite"
       />
     </mat-form-field>
@@ -28,12 +28,12 @@
     </div>
     }
     @else if(dataSource.data.length === 0){
-    <app-empty-state icon="inventory_2" title="No products found"
-      message="There are no products available at the moment."></app-empty-state>
+    <app-empty-state icon="inventory_2" title="No persons found"
+      message="There are no persons available at the moment."></app-empty-state>
     }
     @else {
     <div class="table-container">
-      <table mat-table [dataSource]="dataSource" aria-label="Listado de Clientes">
+      <table mat-table [dataSource]="dataSource" aria-label="Listado de Personas">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Nombre</th>
           <td mat-cell *matCellDef="let p">{{ p.name }}</td>
@@ -57,25 +57,24 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let p">
-            <button mat-icon-button matTooltip="Ver detalle" [routerLink]="['/customers', p.id]"
+            <button mat-icon-button matTooltip="Ver detalle" [routerLink]="['/persons', p.id]"
               aria-label="Ver detalle del Cliente">
               <mat-icon>visibility</mat-icon>
             </button>
             <button 
-            *appHasRole="'Admin'" 
+       
             mat-icon-button 
             matTooltip="Editar" 
-            aria-label="Editar Cliente"
-            (click)="editCustomer(p.id)">
+            aria-label="Editar Persona"
+            (click)="editPerson(p.id)">
               <mat-icon>edit</mat-icon>
             </button>
             <button 
-            *appHasRole="'Admin'" 
-            mat-icon-button 
+             mat-icon-button 
             color="warn" 
             matTooltip="Eliminar"
             (click)="confirmDelete(p)"  
-            aria-label="Eliminar Cliente">
+            aria-label="Eliminar Persona">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -87,7 +86,7 @@
     </div>
 
     <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5, 10, 25]"
-      (page)="onPageChange($event)" aria-label="Paginación de Clientes" />
+      (page)="onPageChange($event)" aria-label="Paginación de Personas" />
     }
   </mat-card-content>
 </mat-card>

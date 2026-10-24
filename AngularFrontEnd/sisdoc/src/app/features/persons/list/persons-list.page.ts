@@ -4,10 +4,10 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { SharedMaterialModule } from '../../../shared/shared-material.module';
 import { HasRoleDirective } from '../../../shared/directives/has-role-directive';
-import { CustomerService } from '../../../core/services/customer.service';
+import { PersonService } from '../../../core/services/person.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { CustomerListItem } from '../../../core/models/customer.model';
+import { PersonListItem } from '../../../core/models/person.model';
 import { EmptyStateComponent } from '../../../shared/components/empty-state/empty-state';
 import { PageEvent } from '@angular/material/paginator';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header';
@@ -27,19 +27,19 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
     EmptyStateComponent,
     PageHeaderComponent
   ],
-  templateUrl: './customers-list.page.html',
-  styleUrl: './customers-list.page.scss',
+  templateUrl: './persons-list.page.html',
+  styleUrl: './persons-list.page.scss',
 })
-export class CustomersListPage implements OnInit {
+export class PersonsListPage implements OnInit {
 
-  private readonly CustomerService = inject(CustomerService);
+  private readonly PersonService = inject(PersonService);
   private readonly notification = inject(NotificationService);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
 
 
   displayedColumns: string[] = ['name', 'lastName', 'email', 'phone', 'actions'];
-  dataSource = new MatTableDataSource<CustomerListItem>();
+  dataSource = new MatTableDataSource<PersonListItem>();
   loading = signal(false);
   totalItems = 0;
   pageSize = 10;
@@ -49,21 +49,21 @@ export class CustomersListPage implements OnInit {
 
   ngOnInit(): void {
 
-    this.loadCustomers();
+    this.loadPersons();
 
 
     this.searchControl.valueChanges
       .pipe(debounceTime(400), distinctUntilChanged())
       .subscribe(() => {
         this.pageIndex = 0;
-        this.loadCustomers();
+        this.loadPersons();
       });
 
   }
 
-  loadCustomers(): void {
+  loadPersons(): void {
     this.loading.set(true);
-    this.CustomerService.list({ pageNumber: this.pageIndex + 1, pageSize: this.pageSize, search: this.searchControl.value ?? '' })
+    this.PersonService.list({ pageNumber: this.pageIndex + 1, pageSize: this.pageSize, search: this.searchControl.value ?? '' })
       .subscribe({
         next: (response) => {
           this.dataSource.data = response;
@@ -71,7 +71,7 @@ export class CustomersListPage implements OnInit {
           this.loading.set(false);
         },
         error: () => {
-          this.notification.error('Error loading Customers');
+          this.notification.error('Error loading Persons');
           this.loading.set(false);
         }
       });
@@ -80,37 +80,37 @@ export class CustomersListPage implements OnInit {
   onPageChange(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.loadCustomers();
+    this.loadPersons();
   }
 
-  editCustomer(id: number): void {
-    this.router.navigate(['/Customers', id, 'edit']);
+  editPerson(id: number): void {
+    this.router.navigate(['/persons', id, 'edit']);
   }
 
-  confirmDelete(Customer: CustomerListItem): void {
+  confirmDelete(Person: PersonListItem): void {
     const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Eliminar Customero',
-        message: `¿Estás seguro de eliminar "${Customer.name}"?. Esta acción no se deshacer.`,
+        title: 'Eliminar Person',
+        message: `¿Estás seguro de eliminar "${Person.name}"?. Esta acción no se deshacer.`,
         confirmLabel: 'Eliminar'
       }
     });
 
     ref.afterClosed().subscribe((confirmed) => {
       if (confirmed) {
-        this.deleteCustomer(Customer.id);
+        this.deletePerson(Person.id);
       }
     })
   }
 
-  private deleteCustomer(id: number): void {
-    this.CustomerService.delete(id).subscribe({
+  private deletePerson(id: number): void {
+    this.PersonService.delete(id).subscribe({
       next: () => {
-        this.notification.success("Customero eliminado correctamente");
-        this.loadCustomers();
+        this.notification.success("Person eliminado correctamente");
+        this.loadPersons();
       },
       error: () => {
-        this.notification.error("Error al eliminar el Customero");
+        this.notification.error("Error al eliminar el Person");
       }
     });
   }

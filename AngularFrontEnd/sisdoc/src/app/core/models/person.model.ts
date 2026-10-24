@@ -1,13 +1,13 @@
 import { BaseEntity } from './base-entity.model';
 
-export interface Customer extends BaseEntity {
+export interface Person extends BaseEntity {
     name: string;
     lastName: string;
     email: string;
     phone: string;
 }
 
-export interface CreateCustomerRequest {
+export interface CreatePersonRequest {
    name: string;
     lastName: string;
     email: string;
@@ -16,14 +16,14 @@ export interface CreateCustomerRequest {
     password: string;
 }
 
-export interface UpdateCustomerRequest {
+export interface UpdatePersonRequest {
     name: string;
     lastName: string;
     email: string;
     phone: string;
 }
 
-export interface CustomerListItem extends BaseEntity {
+export interface PersonListItem extends BaseEntity {
     name: string;
     lastName: string;
     email: string;

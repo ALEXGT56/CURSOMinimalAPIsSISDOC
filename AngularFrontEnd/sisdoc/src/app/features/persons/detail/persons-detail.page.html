@@ -1,44 +1,44 @@
-<app-page-header [title]="customer()?.name ?? 'Datos del cliente'" description="Información completa del cliente">
-  <a mat-button routerLink="/products"><mat-icon>arrow_back</mat-icon> Volver</a>
-  <a *appHasRole="'Admin'" mat-raised-button color="primary" [routerLink]="['/products', customer()?.id, 'edit']">
+<app-page-header [title]="person()?.name ?? 'Datos del cliente'" description="Información completa de la persona">
+  <a mat-button routerLink="/persons"><mat-icon>arrow_back</mat-icon> Volver</a>
+  <a *appHasRole="'Admin'" mat-raised-button color="primary" [routerLink]="['/persons', person()?.id, 'edit']">
     <mat-icon>edit</mat-icon> Editar
   </a>
 </app-page-header>
 
 @if (loading()) {
 <mat-progress-bar mode="indeterminate" />
-} @else if (customer()) {
+} @else if (person()) {
 <mat-card>
   <mat-card-content>
 
     <div class="detail-grid">
       <div class="detail-field">
         <span class="detail-field__label">Nombre</span>
-        <span class="detail-field__value">{{ customer()!.name }}</span>
+        <span class="detail-field__value">{{ person()!.name }}</span>
       </div>
       <div class="detail-field">
         <span class="detail-field__label">Apellidos</span>
-        <span class="detail-field__value">{{ customer()!.lastName }}</span>
+        <span class="detail-field__value">{{ person()!.lastName }}</span>
       </div>
       <div class="detail-field">
         <span class="detail-field__label">Correo electronico</span>
-        <span class="detail-field__value">{{ customer()!.email }}</span>
+        <span class="detail-field__value">{{ person()!.email }}</span>
       </div>
       <div class="detail-field">
         <span class="detail-field__label">Telefono</span>
-        <span class="detail-field__value">{{ customer()!.phone }}</span>
+        <span class="detail-field__value">{{ person()!.phone }}</span>
       </div>
 
-      @if (customer()!.createdAt) {
+      @if (person()!.createdAt) {
       <div class="detail-field">
         <span class="detail-field__label">Creado</span>
-        <span class="detail-field__value">{{ customer()!.createdAt | date:'medium' }}</span>
+        <span class="detail-field__value">{{ person()!.createdAt | date:'medium' }}</span>
       </div>
       }
-      @if (customer()!.createdBy) {
+      @if (person()!.createdBy) {
       <div class="detail-field">
         <span class="detail-field__label">Creado por</span>
-        <span class="detail-field__value">{{ customer()!.createdBy }}</span>
+        <span class="detail-field__value">{{ person()!.createdBy }}</span>
       </div>
       }
     </div>

@@ -37,9 +37,9 @@ export const routes: Routes = [
                     import('./features/globalstatus/globalstate.routes').then((m) => m.GLOBALSTATUS_ROUTES)
             },
             {
-                path: 'customers',
+                path: 'persons',
                 loadChildren: () =>
-                    import('./features/customer/customers.routes').then((m) => m.CUSTOMERS_ROUTES)
+                    import('./features/persons/persons.routes').then((m) => m.PERSONS_ROUTES)
             },
             {path: '', redirectTo: 'dashboard', pathMatch: 'full'}
         ]

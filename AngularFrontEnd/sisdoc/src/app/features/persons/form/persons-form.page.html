@@ -1,0 +1,109 @@
+<app-page-header [title]="title" [description]="description">
+    <a mat-button routerLink="/persons">
+        <mat-icon>arrow_back</mat-icon> Cancelar
+    </a>
+</app-page-header>
+
+@if(loadingData()){
+  <mat-progress-bar mode="indeterminate" />
+} @else{
+  <mat-card>
+      <mat-card-content>
+          <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="person-form">
+              
+              <!-- Fila 1: Nombre y Apellido -->
+              <div class="form-row">
+                  <mat-form-field appearance="outline">
+                      <mat-label>Nombre</mat-label>
+                      <input matInput formControlName="name" aria-label="Nombre" />
+                      @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+                          <mat-error>El nombre es requerido</mat-error>
+                      }
+                      @if (form.get('name')?.hasError('maxlength') && form.get('name')?.touched) {
+                          <mat-error>Máximo 100 caracteres</mat-error>
+                      }
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                      <mat-label>Apellido</mat-label>
+                      <input matInput formControlName="lastName" aria-label="Apellido" />
+                      @if (form.get('lastName')?.hasError('required') && form.get('lastName')?.touched) {
+                          <mat-error>El apellido es requerido</mat-error>
+                      }
+                      @if (form.get('lastName')?.hasError('maxlength') && form.get('lastName')?.touched) {
+                          <mat-error>Máximo 100 caracteres</mat-error>
+                      }
+                  </mat-form-field>
+              </div>
+
+              <!-- Fila 2: Correo y Teléfono -->
+              <div class="form-row">
+                  <mat-form-field appearance="outline">
+                      <mat-label>Correo Electrónico</mat-label>
+                      <mat-icon matPrefix>email</mat-icon>
+                      <input matInput type="email" formControlName="email" aria-label="Correo electrónico" />
+                      @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
+                          <mat-error>El correo es requerido</mat-error>
+                      }
+                      @if (form.get('email')?.hasError('email') && form.get('email')?.touched) {
+                          <mat-error>Ingrese un correo válido</mat-error>
+                      }
+                      @if (form.get('email')?.hasError('maxlength') && form.get('email')?.touched) {
+                          <mat-error>Máximo 200 caracteres</mat-error>
+                      }
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                      <mat-label>Teléfono</mat-label>
+                      <mat-icon matPrefix>phone</mat-icon>
+                      <input matInput formControlName="phone" aria-label="Teléfono" />
+                      @if (form.get('phone')?.hasError('required') && form.get('phone')?.touched) {
+                          <mat-error>El teléfono es requerido</mat-error>
+                      }
+                      @if (form.get('phone')?.hasError('maxlength') && form.get('phone')?.touched) {
+                          <mat-error>Máximo 20 caracteres</mat-error>
+                      }
+                  </mat-form-field>
+              </div>
+
+              <!-- Fila 3: Nombre de usuario y Contraseña -->
+              <div class="form-row">
+                  <mat-form-field appearance="outline">
+                      <mat-label>Nombre de usuario</mat-label>
+                      <mat-icon matPrefix>person</mat-icon>
+                      <input matInput formControlName="userName" aria-label="Nombre de usuario" />
+                      @if (form.get('userName')?.hasError('required') && form.get('userName')?.touched) {
+                          <mat-error>El usuario es requerido</mat-error>
+                      }
+                      @if (form.get('userName')?.hasError('maxlength') && form.get('userName')?.touched) {
+                          <mat-error>Máximo 100 caracteres</mat-error>
+                      }
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                      <mat-label>Contraseña</mat-label>
+                      <mat-icon matPrefix>lock</mat-icon>
+                      <input matInput type="password" formControlName="password" aria-label="Contraseña" />
+                      @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
+                          <mat-error>La contraseña es requerida</mat-error>
+                      }
+                      @if (form.get('password')?.hasError('maxlength') && form.get('password')?.touched) {
+                          <mat-error>Máximo 25 caracteres</mat-error>
+                      }
+                  </mat-form-field>
+              </div>
+
+              <!-- Botones de Acción -->
+              <div class="form-actions">
+                  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || loading()">
+                      @if (loading()) { 
+                          <mat-spinner diameter="18" /> 
+                      } @else { 
+                          {{ isEditMode ? 'Actualizar' : 'Crear Usuario' }} 
+                      }
+                  </button>
+              </div>
+          </form>
+      </mat-card-content>
+  </mat-card>
+}

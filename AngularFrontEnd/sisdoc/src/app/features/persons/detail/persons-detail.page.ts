@@ -5,32 +5,32 @@ import { CommonModule } from '@angular/common';
 import { SharedMaterialModule } from '../../../shared/shared-material.module';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header';
 import { HasRoleDirective } from '../../../shared/directives/has-role-directive';
-import { CustomerService } from '../../../core/services/customer.service';
-import { Customer } from '../../../core/models/customer.model';
+import { PersonService } from '../../../core/services/person.service';
+import { Person } from '../../../core/models/person.model';
 
 @Component({
-  selector: 'app-customers-detail.page',
+  selector: 'app-persons-detail.page',
   standalone: true,
   imports: [CommonModule, RouterLink,SharedMaterialModule, PageHeaderComponent, HasRoleDirective],
-  templateUrl: './customers-detail.page.html',
-  styleUrl: './customers-detail.page.scss',
+  templateUrl: './persons-detail.page.html',
+  styleUrl: './persons-detail.page.scss',
 })
-export class customersDetailPage implements OnInit {
+export class personsDetailPage implements OnInit {
 
-  private readonly customerService = inject(CustomerService);
+  private readonly personService = inject(PersonService);
   private readonly route = inject(ActivatedRoute);
   private readonly notification = inject(NotificationService);
 
   loading = signal(false);
-  customer = signal<Customer | null>(null);
+  person = signal<Person | null>(null);
 
   ngOnInit(): void {
     this.loading.set(true);
     const id = Number(this.route.snapshot.paramMap.get('id'));
     
-    this.customerService.getById(id).subscribe({
+    this.personService.getById(id).subscribe({
       next: (prod) => {
-        this.customer.set(prod);
+        this.person.set(prod);
         this.loading.set(false);
       },
       error: () => {
