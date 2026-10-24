@@ -1,0 +1,92 @@
+<app-page-header [title]="title" [description]="description">
+    <a mat-button routerLink="/documentticket">
+        <mat-icon>arrow_back</mat-icon> Cancelar
+    </a>
+</app-page-header>
+
+@if(loadingData()){
+<mat-progress-bar mode="indeterminate" />
+} @else{
+
+<mat-card>
+    <mat-card-content>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="documentticket-form">
+            
+            <div class="form-row">
+                <!-- Número de Seguimiento -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Número de Seguimiento</mat-label>
+                    <input matInput formControlName="trackingnumber" placeholder="Ej. TRK-2026-001" aria-label="Número de Seguimiento" />
+                    @if (form.get('trackingnumber')?.hasError('required') && form.get('trackingnumber')?.touched) {
+                    <mat-error>El número de seguimiento es requerido</mat-error>
+                    }
+                </mat-form-field> 
+
+                <!-- Fecha de Emision (Filing Date) -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Fecha de Emision</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="filingdate" placeholder="DD/MM/YYYY" aria-label="Fecha de Emision" />
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    @if (form.get('filingdate')?.hasError('required') && form.get('filingdate')?.touched) {
+                    <mat-error>La fecha de Emision es requerida</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <!-- Asunto (Subject) -->
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Asunto</mat-label>
+                <textarea matInput formControlName="subject" rows="2" placeholder="Describa el asunto del trámite..." aria-label="Asunto"></textarea>
+                @if (form.get('subject')?.hasError('required') && form.get('subject')?.touched) {
+                <mat-error>El asunto es requerido</mat-error>
+                }
+            </mat-form-field>
+
+            <div class="form-row">
+                <!-- Nombre del Remitente -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Remitente (Nombre)</mat-label>
+                    <input matInput formControlName="sendername" placeholder="Nombre completo o razón social" aria-label="Remitente" />
+                    @if (form.get('sendername')?.hasError('required') && form.get('sendername')?.touched) {
+                    <mat-error>El nombre del remitente es requerido</mat-error>
+                    }
+                </mat-form-field>
+
+                <!-- Identificación del Remitente -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Identificación del Remitente</mat-label>
+                    <input matInput formControlName="senderidnumber" placeholder="DNI, Cédula o RUC" aria-label="Identificación del Remitente" />
+                    @if (form.get('senderidnumber')?.hasError('required') && form.get('senderidnumber')?.touched) {
+                    <mat-error>La identificación es requerida</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+   
+
+             <mat-form-field appearance="outline">
+                    <mat-label>Estado Global</mat-label>
+                    <mat-select formControlName="globalstatus" aria-label="Estado Global">
+                        @for (cat of globalstatus(); track cat.id) {
+                        <mat-option [value]="cat.id">{{ cat.name }}</mat-option>
+                        }
+                    </mat-select>
+                    @if (form.get('globalstatus')?.hasError('required') && form.get('globalstatus')?.touched) {
+                    <mat-error>Selecciona una estado Global</mat-error>
+                    }
+            </mat-form-field>
+
+
+            <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || loading()">
+                    @if (loading()) { <mat-spinner diameter="18" /> }
+                    @else { {{ isEditMode ? 'Actualizar Trámite' : 'Crear Trámite' }} }
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
+
+}

@@ -33,6 +33,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 export class GlobalStatusListPage implements OnInit {
 
   private readonly globalstatusService = inject(GlobalStatusService);
+  
   private readonly notification = inject(NotificationService);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
