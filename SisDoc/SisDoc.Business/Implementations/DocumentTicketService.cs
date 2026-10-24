@@ -1,5 +1,7 @@
 ﻿using Mapster;
 using SisDoc.Business.DTO.Request.DocumentTicket;
+using SisDoc.Business.DTO.Response.DocumentTicket;
+using SisDoc.Business.DTO.Response.GlobalStatus;
 using SisDoc.Business.Interfaces;
 using SisDoc.Common.Helpers;
 using SisDoc.DataAccess.Entities;
@@ -45,5 +47,28 @@ namespace SisDoc.Business.Implementations
 
             return Result.Success();
         }
+
+        public async Task<Result<List<ListDocumentTicketResponse>>> ListAsync(int pageNumber = 1, int pageSize = 10)
+        {
+            var result = await _repository.ListAsync(
+                predicate: p => p.Status,
+                selector: p => new ListDocumentTicketResponse
+                {
+                    TicketId = p.TicketId,
+                    TrackingNumber = p.TrackingNumber,
+                    Subject = p.Subject,
+                    FilingDate = p.FilingDate,
+                    SenderName = p.SenderName,
+                    SenderIdNumber = p.SenderIdNumber,
+                    GlobalStatus = p.GlobalStatus,
+                },
+                pageNumber: pageNumber,
+                pageSize: pageSize
+            );
+            return Result.Success(result.Result.ToList());
+        }
+
+
+
     }
 }

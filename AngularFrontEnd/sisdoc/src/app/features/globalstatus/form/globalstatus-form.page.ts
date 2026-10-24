@@ -1,13 +1,11 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { GlobalStatusService } from '../../../core/services/globalstatus.service';
-import { CategoryService } from '../../../core/services/category.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SharedMaterialModule } from '../../../shared/shared-material.module';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header';
-import { Category } from '../../../core/models/category.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -32,7 +30,6 @@ export class GlobalStatusFormPage implements OnInit {
   private readonly router = inject(Router);
 
 
-  categories = signal<Category[]>([]);
   isEditMode = false;
   globalstatusId: number | null = null;
   loading = signal(false);

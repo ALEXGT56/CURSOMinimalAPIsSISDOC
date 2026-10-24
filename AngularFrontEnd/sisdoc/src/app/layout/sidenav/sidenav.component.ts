@@ -26,7 +26,7 @@ export class SidenavComponent {
   readonly navItems: NavItem[] = [
     {label: 'Dashboard', icon: 'dashboard', route: '/dashboard'},
     {label: 'GlobalStatus', icon: 'inventory_2', route: '/globalstatus'},
-    {label: 'Expedient', icon: 'shopping_cart', route: '/orders'},
+    {label: 'Expedient', icon: 'shopping_cart', route: '/documentticket'},
     {label: 'Persons', icon: 'people', route: '/persons'},
     {label: 'Admin Panel', icon: 'admin_panel_settings', route: '/admin', adminOnly: true}
   ]

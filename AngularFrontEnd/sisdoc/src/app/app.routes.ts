@@ -41,6 +41,11 @@ export const routes: Routes = [
                 loadChildren: () =>
                     import('./features/persons/persons.routes').then((m) => m.PERSONS_ROUTES)
             },
+            {
+                path: 'documentticket',
+                loadChildren: () =>
+                    import('./features/documentticket/documentticket.routes').then((m) => m.DOCUMENTTICKET_ROUTES)
+            },
             {path: '', redirectTo: 'dashboard', pathMatch: 'full'}
         ]
    },
