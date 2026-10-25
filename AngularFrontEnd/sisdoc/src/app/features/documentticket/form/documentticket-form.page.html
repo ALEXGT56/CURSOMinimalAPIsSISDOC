@@ -70,13 +70,77 @@
                     <mat-label>Estado Global</mat-label>
                     <mat-select formControlName="globalstatus" aria-label="Estado Global">
                         @for (cat of globalstatus(); track cat.id) {
-                        <mat-option [value]="cat.id">{{ cat.name }}</mat-option>
+                        <mat-option [value]="cat.name">{{ cat.name }}</mat-option>
                         }
                     </mat-select>
                     @if (form.get('globalstatus')?.hasError('required') && form.get('globalstatus')?.touched) {
                     <mat-error>Selecciona una estado Global</mat-error>
                     }
             </mat-form-field>
+
+            <!-- SECCIÓN DE DETALLES (MOVIMIENTOS) -->
+            <h3 class="section-title">Detalles / Movimientos del Trámite</h3>
+            <hr class="section-divider" />
+
+            <div formArrayName="details">
+                @for (detailCtrl of details.controls; track $index; let i = $index) {
+                    <div [formGroupName]="i" class="detail-group-card border p-3 mb-3 rounded">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong>Movimiento #{{ i + 1 }}</strong>
+                            <button mat-icon-button color="warn" type="button" (click)="removeDetail(i)" matTooltip="Eliminar movimiento">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="form-row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Orden del Paso (stepOrder)</mat-label>
+                                <input matInput type="number" formControlName="stepOrder" />
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Cantidad (count)</mat-label>
+                                <input matInput type="number" formControlName="count" />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Departamento Origen</mat-label>
+                                <input matInput formControlName="originDepartment" />
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Departamento Destino</mat-label>
+                                <input matInput formControlName="targetDepartment" />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Usuario Asignado</mat-label>
+                                <input matInput formControlName="assignedUser" />
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Estado del Movimiento</mat-label>
+                                <input matInput formControlName="movementStatus" />
+                            </mat-form-field>
+                        </div>
+
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Observaciones / Remarks</mat-label>
+                            <textarea matInput formControlName="remarks" rows="2"></textarea>
+                        </mat-form-field>
+                    </div>
+                }
+            </div>
+
+            <div class="mb-3">
+                <button mat-stroked-button color="primary" type="button" (click)="addDetail()">
+                    <mat-icon>add</mat-icon> Agregar Movimiento
+                </button>
+            </div>
 
 
             <div class="form-actions">

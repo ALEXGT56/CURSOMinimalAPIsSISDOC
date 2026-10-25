@@ -3,11 +3,12 @@ import { DocumentTicketService } from '../../../core/services/documentticket.ser
 import { GlobalStatusService } from '../../../core/services/globalstatus.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SharedMaterialModule } from '../../../shared/shared-material.module';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CreateDocumentTicketRequest } from '../../../core/models/documentticket.model'; // Ajusta la ruta a tu archivo de interfaces
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -49,7 +50,8 @@ export class DocumentTicketFormPage implements OnInit {
     filingdate: [new Date(), [Validators.required]],
     sendername: ['', [Validators.required]],
     senderidnumber: ['', [Validators.required]],
-    globalstatus: ['', [Validators.required]]
+    globalstatus: ['', [Validators.required]],
+    details: this.fb.array([]) 
   });
 
   get title(): string {
@@ -58,6 +60,10 @@ export class DocumentTicketFormPage implements OnInit {
 
   get description(): string {
     return this.isEditMode ? 'Modifica los datos del expediente' : 'Completa los datos del nuevo expediente';
+  }
+
+  get details(): FormArray {
+    return this.form.get('details') as FormArray;
   }
 
   ngOnInit(): void {
@@ -70,7 +76,29 @@ export class DocumentTicketFormPage implements OnInit {
       this.isEditMode = true;
       this.ticketId = Number(id);
       this.loadDocumentTicket(this.ticketId);
+    }else {
+      // Opcional: Agregar un detalle por defecto al crear para que no vaya vacío
+      this.addDetail();
     }
+  }
+
+  addDetail(): void {
+    const detailGroup = this.fb.group({
+      count: [0, [Validators.required]],
+      stepOrder: [1, [Validators.required]],
+      transferredDate: [new Date(), [Validators.required]],
+      originDepartment: ['', [Validators.required]],
+      targetDepartment: ['', [Validators.required]],
+      assignedUser: ['', [Validators.required]],
+      remarks: [''],
+      movementStatus: ['', [Validators.required]],
+      receivedDate: [new Date(), [Validators.required]]
+    });
+    this.details.push(detailGroup);
+  }
+
+  removeDetail(index: number): void {
+    this.details.removeAt(index);
   }
 
     private loadGlobalStatus(): void {
@@ -101,36 +129,26 @@ export class DocumentTicketFormPage implements OnInit {
     });
   }
 
-  submit(): void {
-    if (this.form.invalid) return;
-
-    const value = this.form.value;
-    const request = {
-      trackingnumber: value.trackingnumber!,
-      subject: value.subject!,
-      filingdate:value.filingdate!,
-      sendername:value.sendername!,
-      senderidnumber:value.senderidnumber!,
-      globalstatus:value.globalstatus!,
-    };
+submit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     this.loading.set(true);
+     const formValues = this.form.getRawValue() as CreateDocumentTicketRequest;
 
-    const operation$ = this.isEditMode
-      ? this.documentticketService.update(this.ticketId!, request)
-      : this.documentticketService.create(request);
-
-    operation$.subscribe({
-      next: () => {
-        this.loading.set(false);
-        this.notification.success(this.isEditMode ? 'Estado expediente correctamente' : 'Estado expediente correctamente');
-        this.router.navigate(['/documentticket']);
-      },
-      error: (err: HttpErrorResponse) => {
-        this.loading.set(false);
-        const msg = err.error?.message ?? 'Error al guardar el expediente';
-        this.notification.error(msg);
-      }
-    })
+    if (this.isEditMode==false){
+      this.documentticketService.create(formValues).subscribe({
+        next: () => {
+          this.notification.success('Trámite creado exitosamente.');
+          this.router.navigate(['/documentticket']);
+        },
+        error: (error: HttpErrorResponse) => {
+          this.notification.error('Ocurrió un error al crear el trámite.');
+          this.loading.set(false);
+        }
+      });
+    }
   }
 }
